@@ -1,5 +1,5 @@
-export default function Score() {
+export default function Score({score}) {
     return (
-        <p>Score: </p>
+        <p>Score: {score}</p>
     )
 }

@@ -14,12 +14,16 @@ function App() {
   return (
     <>
       
-      <Gameboard>
+      <Gameboard score={0} bestScore={0}>
 
       </Gameboard>
       <CardContainer>
 
       </CardContainer>
+
+      <footer>
+        Future footer info 
+      </footer>
     </>
   )
 }

@@ -1,7 +1,7 @@
-export default function Card({url, name, key}) {
+export default function Card({url, name}) {
 
     return (
-        <article key={key}>
+        <article>
             <img src={url} alt="" />
             <p>{name}</p>
         </article>

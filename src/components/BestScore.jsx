@@ -1,7 +1,7 @@
-export default function BestScore() {
+export default function BestScore({bestScore}) {
 
     return (
-        <p>Best Score: </p>
+        <p>Best Score: {bestScore}</p>
     )
 
 

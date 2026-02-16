@@ -5,7 +5,7 @@ import JSON_MOCK from './data.js';
 export default function CardContainer() {
 
     const cardItems = JSON_MOCK.data.map( (characterObject) => 
-        <Card url={characterObject.character.images.jpg.image_url} name={characterObject.character.name} key={characterObject.mal_id}></Card>
+        <Card url={characterObject.character.images.jpg.image_url} name={characterObject.character.name} key={characterObject.character.mal_id}></Card>
     )
 
     return (
