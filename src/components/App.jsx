@@ -8,6 +8,7 @@ function App() {
   const [clickedCards, setClickedCards] = useState([]);
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
+  const [gameStatus, setGameStatus] = useState(null);
 
   function shuffleArray(cards) {
     const arrayOfIndices = getRandomIndices(10);
@@ -23,17 +24,24 @@ function App() {
   function handleClick(e) {
     const id = e.currentTarget.dataset.id;
     if (clickedCards.includes(id)) {
-      console.log("Lost")
       if (score > bestScore) setBestScore(score);
+      setGameStatus('lost');
       setClickedCards([]);
-      setScore(0)
+      setScore(0);
       setCards(shuffleArray(cards));
     }
     else {
-      console.log("continue");
-      setClickedCards([...clickedCards, id]);
-      setScore(score => score + 1);
-      setCards(shuffleArray(cards));
+      const newClickedCards = [...clickedCards, id];
+      const newScore = score + 1;
+      setClickedCards(newClickedCards);
+      setScore(newScore);
+      
+      if (newScore === 10) {
+        setGameStatus('won');
+        if (newScore > bestScore) setBestScore(newScore);
+      } else {
+        setCards(shuffleArray(cards));
+      }
     }
   }
 
@@ -96,14 +104,40 @@ function App() {
         }
     , [])
 
+  function resetGame() {
+    setGameStatus(null);
+    setClickedCards([]);
+    setScore(0);
+    setCards(shuffleArray(cards));
+  }
+
   return (
     <>  
       <Gameboard score={score} bestScore={bestScore} onScoreUpdate={setScore} onBestScoreUpdate={setBestScore}>
       </Gameboard>
       <CardContainer cards={cards} onClick={handleClick}></CardContainer>
 
+      {gameStatus && (
+        <div className="modal-overlay" onClick={resetGame}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <div className="modal-content">
+              <h2>{gameStatus === 'won' ? '¡Victoria!' : '¡Derrota!'}</h2>
+              <p>
+                {gameStatus === 'won' 
+                  ? '¡Has encontrado todos los personajes sin repetir!' 
+                  : '¡Has clickeado el mismo personaje dos veces!'}
+              </p>
+              <p className="final-score">Puntuación: {score}</p>
+              <button onClick={resetGame} className="play-again-btn">
+                Jugar de nuevo
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       <footer>
-        Future footer info 
+        <p>Haz clic en cada personaje solo una vez para ganar</p>
       </footer>
     </>
   )

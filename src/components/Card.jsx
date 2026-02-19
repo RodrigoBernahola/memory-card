@@ -1,8 +1,8 @@
 export default function Card({url, name, onClick, dataId}) {
 
     return (
-        <article onClick={onClick} data-id={dataId} >
-            <img src={url} alt="" />
+        <article className="card" onClick={onClick} data-id={dataId} >
+            <img src={url} alt={name} />
             <p>{name}</p>
         </article>
     )
